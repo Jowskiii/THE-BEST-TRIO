@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('images/iSUKATBG.webp') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .promo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(245, 245, 245, 0.8);
+        }
+
+        .promo-banner {
+            position: relative;
+            width: 80%; /* Use a percentage for flexibility */
+            max-width: 600px; /* Maximum width for large screens */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .promo-logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            width: 15%; /* Adjusted width for responsiveness */
+            max-width: 100px; /* Cap the size on large screens */
+        }
+
+        .promo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .promo-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #73b0e2;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 4vw; /* Responsive font size */
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 2;
+            max-width: 300px; /* Limit button width on large screens */
+        }
+
+        .promo-button:hover {
+            background-color: #73b0e2;
+        }
+
+        @media (max-width: 768px) {
+            .promo-banner {
+                width: 90%; /* Wider on smaller screens */
+            }
+
+            .promo-button {
+                font-size: 6vw; /* Larger font size on smaller screens */
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .promo-logo {
+                width: 20%; /* Adjust the logo size for very small screens */
+            }
+
+            .promo-button {
+                font-size: 8vw; /* Even larger font size for small screens */
+                padding: 6px 12px;
+            }
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazar Shoes Promo</title>
+</head>
+<body>
+    <div class="promo-container">
+        <div class="promo-banner">
+            <img src="images/lebron.jpg" alt="Man Tying Shoes" class="promo-image">
+            <button class="promo-button">Get Started</button>
+        </div>
+    </div>
+</body>
+</html>
