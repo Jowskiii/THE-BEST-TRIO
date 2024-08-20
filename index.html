@@ -92,16 +92,19 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h5 class="modal-title text-center">Reset Password</h5>
-                    <form id="forgotPasswordForm">
+                    <form id="forgotPasswordForm" novalidate>
                         <div class="form-group">
                             <input type="email" class="form-control" id="forgotEmail" placeholder="Enter your email" required>
+                            <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Send Reset Email</button>
                     </form>
+                    <div id="resetStatus" class="mt-3 text-center"></div>
                 </div>
             </div>
         </div>
     </div>
+    
     
     <!-- Register Modal -->
     <div id="registerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
@@ -109,22 +112,30 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <img id="registerimage" src="images/loginlogo.png" class="img-fluid mx-auto d-block" alt="Register Logo">
-                    <form id="registerForm">
+                    <form id="registerForm" novalidate>
                         <div class="form-group">
                             <label for="registerEmail">Email address</label>
                             <input type="email" class="form-control" id="registerEmail" placeholder="Enter email" required>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
                         <div class="form-group">
                             <label for="registerPassword">Password</label>
                             <input type="password" class="form-control" id="registerPassword" placeholder="Password" required pattern=".{6,16}" title="Password must be 6 to 16 characters long">
+                            <div class="valid-feedback">Strong password!</div>
+                            <div class="invalid-feedback">Password must be 6 to 16 characters long.</div>
                         </div>
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required pattern="[A-Za-z]+" title="First Name should only contain letters">
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required pattern="[A-Za-z\s]+" title="First Name should only contain letters and spaces">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">First Name should only contain letters and spaces.</div>
                         </div>
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required pattern="[A-Za-z]+" title="Last Name should only contain letters">
+                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required pattern="[A-Za-z\s]+" title="Last Name should only contain letters and spaces">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Last Name should only contain letters and spaces.</div>
                         </div>
                         <button type="submit" class="btn btn-primary">Register</button>
                     </form>
@@ -140,7 +151,7 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getAuth, sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
@@ -177,6 +188,37 @@
                 });
         });
 
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    forgotPasswordForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('forgotEmail').value;
+
+        // Check if email is valid before proceeding
+        if (!forgotPasswordForm.checkValidity()) {
+            forgotPasswordForm.classList.add('was-validated');
+            return;
+        }
+
+        // Clear previous status
+        const resetStatus = document.getElementById('resetStatus');
+        resetStatus.innerHTML = '';
+
+        // Send password reset email
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Success - show feedback to user
+                resetStatus.innerHTML = '<div class="alert alert-success" role="alert">Reset email sent successfully!</div>';
+            })
+            .catch((error) => {
+                // Error handling
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error('Error during password reset:', errorCode, errorMessage);
+                resetStatus.innerHTML = `<div class="alert alert-danger" role="alert">Failed to send reset email: ${errorMessage}</div>`;
+            });
+    });
+
         // Signup form submission
         const signupForm = document.getElementById('registerForm');
         signupForm.addEventListener('submit', (e) => {
@@ -197,6 +239,37 @@
                     console.error('Error during signup:', errorCode, errorMessage);
                 });
         });
+        (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the form element
+            var form = document.getElementById('registerForm');
+            
+            // Add event listener for form submission
+            form.addEventListener('submit', function(event) {
+                // Check form validity
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add event listeners for real-time validation feedback
+            var inputs = form.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                input.addEventListener('input', function() {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                    }
+                });
+            });
+        }, false);
+    })();
     </script>
 </body>
 </html>
