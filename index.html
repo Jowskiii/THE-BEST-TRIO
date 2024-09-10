@@ -198,73 +198,70 @@
     </div>
 
     <!-- JavaScript dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
-            authDomain: "isukat.firebaseapp.com",
-            projectId: "isukat",
-            storageBucket: "isukat.appspot.com",
-            messagingSenderId: "751168754443",
-            appId: "1:751168754443:web:e96a67dab5e30f077a080e",
-            measurementId: "G-J090BFT08X"
-        };
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js"; // Import Firestore functions
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
+    const firebaseConfig = {
+        apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
+        authDomain: "isukat.firebaseapp.com",
+        projectId: "isukat",
+        storageBucket: "isukat.appspot.com",
+        messagingSenderId: "751168754443",
+        appId: "1:751168754443:web:e96a67dab5e30f077a080e",
+        measurementId: "G-J090BFT08X"
+    };
 
-        // Login form submission
-        const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app); // Initialize Firestore
 
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    alert('Login successful!');
-                    console.log('Logged in user:', user);
-                    window.location.href = 'homepage.html';
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert('Login failed: ' + errorMessage);
-                    console.error('Error during login:', errorCode, errorMessage);
-                });
-        });
+    // Login form submission
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
 
-        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                alert('Login successful!');
+                console.log('Logged in user:', user);
+                window.location.href = 'homepage.html';
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('Login failed: ' + errorMessage);
+                console.error('Error during login:', errorCode, errorMessage);
+            });
+    });
+
+    // Forgot password form submission
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
     forgotPasswordForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const email = document.getElementById('forgotEmail').value;
 
-        // Check if email is valid before proceeding
         if (!forgotPasswordForm.checkValidity()) {
             forgotPasswordForm.classList.add('was-validated');
             return;
         }
 
-        // Clear previous status
         const resetStatus = document.getElementById('resetStatus');
         resetStatus.innerHTML = '';
 
-        // Send password reset email
-        const auth = getAuth();
         sendPasswordResetEmail(auth, email)
             .then(() => {
-                // Success - show feedback to user
                 resetStatus.innerHTML = '<div class="alert alert-success" role="alert">Reset email sent successfully!</div>';
             })
             .catch((error) => {
-                // Error handling
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.error('Error during password reset:', errorCode, errorMessage);
@@ -272,57 +269,37 @@
             });
     });
 
-        // Signup form submission
-        const signupForm = document.getElementById('registerForm');
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
+    // Signup form submission
+    const signupForm = document.getElementById('registerForm');
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    alert('Signup successful!');
-                    console.log('Signed up user:', user);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert('Signup failed: ' + errorMessage);
-                    console.error('Error during signup:', errorCode, errorMessage);
-                });
-        });
-        (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            // Get the form element
-            var form = document.getElementById('registerForm');
-            
-            // Add event listener for form submission
-            form.addEventListener('submit', function(event) {
-                // Check form validity
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
 
-            // Add event listeners for real-time validation feedback
-            var inputs = form.querySelectorAll('input');
-            inputs.forEach(function(input) {
-                input.addEventListener('input', function() {
-                    if (input.checkValidity()) {
-                        input.classList.remove('is-invalid');
-                        input.classList.add('is-valid');
-                    } else {
-                        input.classList.remove('is-valid');
-                        input.classList.add('is-invalid');
-                    }
-                });
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Save user profile to Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                createdAt: new Date()
             });
-        }, false);
-    })();
-    </script>
+
+            alert('Signup successful!');
+            console.log('Signed up user:', user);
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert('Signup failed: ' + errorMessage);
+            console.error('Error during signup:', errorCode, errorMessage);
+        }
+    });
+</script>
 </body>
 </html>

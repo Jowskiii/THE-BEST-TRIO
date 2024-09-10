@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footcare</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
@@ -30,6 +32,7 @@
             flex: 1;
             padding: 20px;
             background: #f9f9f9;
+            margin-top: 56px; /* Adjust based on navbar height */
         }
 
         .footcare-section {
@@ -94,18 +97,6 @@
             color: #ffc107;
         }
 
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-        }
-
-        .bottom-nav .nav-button {
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
         @media (max-width: 768px) {
             .shoe-item {
                 flex: 1 1 calc(50% - 20px);
@@ -116,69 +107,83 @@
             .shoe-item {
                 flex: 1 1 100%;
             }
-
-            .bottom-nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .bottom-nav .nav-button {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Footcare & Healthy Shoes</h1>
-        </header>
-
-        <main>
-            <div class="footcare-section">
-                <h2>Importance of Footcare</h2>
-                <p>Foot care is essential for maintaining overall health and well-being. Proper foot hygiene and regular check-ups can prevent common foot problems such as infections, corns, calluses, and even more severe conditions like diabetes-related complications.</p>
-                <p>Healthy feet also contribute to better posture, reduced pain in the knees and lower back, and overall improved quality of life. Incorporating daily foot care practices, such as washing, moisturizing, and wearing the right shoes, is crucial.</p>
+    <!-- Fixed Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">iSUKAT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="homepage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="footcare.html">Footcare</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="isukatmo.html">iSUKAT MO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user-profile.html">User Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Logout</a>
+                    </li>
+                </ul>
             </div>
+        </div>
+    </nav>
 
-            <div class="footcare-section">
-                <h2>Choosing Healthy Shoes</h2>
-                <p>Wearing the right shoes is key to preventing foot problems. Shoes should provide adequate support, fit properly, and be appropriate for the activity. Look for shoes with a wide toe box, good arch support, and a cushioned sole. Avoid high heels and shoes that are too tight, as these can lead to discomfort and long-term foot issues.</p>
-            </div>
+    <header>
+        <h1>Footcare & Healthy Shoes</h1>
+    </header>
 
-            <div class="footcare-section healthy-shoes">
-                <div class="shoe-item">
-                    <img src="images/classic.jpg" alt="Comfortable Walking Shoes">
-                    <h3>Comfortable Walking Shoes</h3>
-                    <p>Designed with a cushioned sole and breathable material, these shoes offer excellent support for daily walking activities.</p>
-                </div>
-                <div class="shoe-item">
-                    <img src="images/ortho.jpg" alt="Orthopedic Shoes">
-                    <h3>Orthopedic Shoes</h3>
-                    <p>Perfect for those with foot problems, these shoes provide extra support and help alleviate pain and discomfort.</p>
-                </div>
-                <div class="shoe-item">
-                    <img src="images/running.jpg" alt="Running Shoes">
-                    <h3>Running Shoes</h3>
-                    <p>These shoes offer superior cushioning and support, ideal for runners and those who engage in high-impact activities.</p>
-                </div>
-            </div>
-        </main>
+    <main>
+        <div class="footcare-section">
+            <h2>Importance of Footcare</h2>
+            <p>Foot care is essential for maintaining overall health and well-being. Proper foot hygiene and regular check-ups can prevent common foot problems such as infections, corns, calluses, and even more severe conditions like diabetes-related complications.</p>
+            <p>Healthy feet also contribute to better posture, reduced pain in the knees and lower back, and overall improved quality of life. Incorporating daily foot care practices, such as washing, moisturizing, and wearing the right shoes, is crucial.</p>
+        </div>
 
-        <footer>
-            <div class="footer-content">
-                <p>Take care of your feet the <span class="highlight">right</span> way</p>
+        <div class="footcare-section">
+            <h2>Choosing Healthy Shoes</h2>
+            <p>Wearing the right shoes is key to preventing foot problems. Shoes should provide adequate support, fit properly, and be appropriate for the activity. Look for shoes with a wide toe box, good arch support, and a cushioned sole. Avoid high heels and shoes that are too tight, as these can lead to discomfort and long-term foot issues.</p>
+        </div>
+
+        <div class="footcare-section healthy-shoes">
+            <div class="shoe-item">
+                <img src="images/classic.jpg" alt="Comfortable Walking Shoes">
+                <h3>Comfortable Walking Shoes</h3>
+                <p>Designed with a cushioned sole and breathable material, these shoes offer excellent support for daily walking activities.</p>
             </div>
-            <nav class="bottom-nav">
-                <a href="homepage.html" class="nav-button">Home</a>
-                <a href="footcare.html" class="nav-button">Footcare</a>
-                <a href="isukatmo.html" class="nav-button">iSUKAT MO</a>
-                <a href="user-profile.html" class="nav-button">User Profile</a>
-                <a href="index.html" class="nav-button">Logout</a>
-            </nav>
-        </footer>
-    </div>
+            <div class="shoe-item">
+                <img src="images/ortho.jpg" alt="Orthopedic Shoes">
+                <h3>Orthopedic Shoes</h3>
+                <p>Perfect for those with foot problems, these shoes provide extra support and help alleviate pain and discomfort.</p>
+            </div>
+            <div class="shoe-item">
+                <img src="images/running.jpg" alt="Running Shoes">
+                <h3>Running Shoes</h3>
+                <p>These shoes offer superior cushioning and support, ideal for runners and those who engage in high-impact activities.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Take care of your feet the <span class="highlight">right</span> way</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

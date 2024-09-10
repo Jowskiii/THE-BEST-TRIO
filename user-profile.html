@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .profile-container {
+            margin: 20px;
+        }
+        .profile-form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">iSUKAT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="homepage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="footcare.html">Footcare</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="isukatmo.html">iSUKAT MO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user-profile.html">User Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container profile-container">
+        <h2>User Profile</h2>
+        <div id="profile-info">
+            <!-- User info will be injected here -->
+        </div>
+        <div class="profile-form">
+            <h3>Edit Profile</h3>
+            <form id="edit-profile-form">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
+            authDomain: "isukat.firebaseapp.com",
+            projectId: "isukat",
+            storageBucket: "isukat.appspot.com",
+            messagingSenderId: "751168754443",
+            appId: "1:751168754443:web:e96a67dab5e30f077a080e",
+            measurementId: "G-J090BFT08X"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userId = 'USER_ID'; // Replace with the current user's ID
+
+            // Fetch user data
+            db.collection('users').doc(userId).get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('username').value = data.username;
+                    document.getElementById('email').value = data.email;
+
+                    document.getElementById('profile-info').innerHTML = `
+                        <p><strong>Username:</strong> ${data.username}</p>
+                        <p><strong>Email:</strong> ${data.email}</p>
+                    `;
+                }
+            }).catch(error => {
+                console.error('Error getting user data:', error);
+            });
+
+            // Update user data
+            document.getElementById('edit-profile-form').addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+
+                db.collection('users').doc(userId).update({
+                    username: username,
+                    email: email
+                }).then(() => {
+                    alert('Profile updated successfully!');
+                    document.getElementById('profile-info').innerHTML = `
+                        <p><strong>Username:</strong> ${username}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                    `;
+                }).catch(error => {
+                    console.error('Error updating user data:', error);
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
