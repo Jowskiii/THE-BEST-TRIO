@@ -57,8 +57,12 @@
             <h3>Edit Profile</h3>
             <form id="edit-profile-form">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" required>
+                    <label for="first-name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first-name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="last-name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last-name" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -68,62 +72,84 @@
             </form>
         </div>
     </div>
+    
 
-    <script>
-        // Initialize Firebase
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+    
         const firebaseConfig = {
             apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
             authDomain: "isukat.firebaseapp.com",
+            databaseURL: "https://isukat-default-rtdb.firebaseio.com",
             projectId: "isukat",
             storageBucket: "isukat.appspot.com",
             messagingSenderId: "751168754443",
             appId: "1:751168754443:web:e96a67dab5e30f077a080e",
             measurementId: "G-J090BFT08X"
         };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const userId = 'USER_ID'; // Replace with the current user's ID
-
-            // Fetch user data
-            db.collection('users').doc(userId).get().then(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('username').value = data.username;
-                    document.getElementById('email').value = data.email;
-
-                    document.getElementById('profile-info').innerHTML = `
-                        <p><strong>Username:</strong> ${data.username}</p>
-                        <p><strong>Email:</strong> ${data.email}</p>
-                    `;
-                }
-            }).catch(error => {
-                console.error('Error getting user data:', error);
-            });
-
-            // Update user data
-            document.getElementById('edit-profile-form').addEventListener('submit', (event) => {
-                event.preventDefault();
-
-                const username = document.getElementById('username').value;
-                const email = document.getElementById('email').value;
-
-                db.collection('users').doc(userId).update({
-                    username: username,
-                    email: email
-                }).then(() => {
-                    alert('Profile updated successfully!');
-                    document.getElementById('profile-info').innerHTML = `
-                        <p><strong>Username:</strong> ${username}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                    `;
-                }).catch(error => {
-                    console.error('Error updating user data:', error);
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getDatabase(app);
+    
+        // When the page loads, check if the user is authenticated
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                const userRef = ref(db, 'users/' + uid);
+    
+                // Fetch user data
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        document.getElementById('first-name').value = userData.firstName || '';
+                        document.getElementById('last-name').value = userData.lastName || '';
+                        document.getElementById('email').value = userData.email || '';
+    
+                        document.getElementById('profile-info').innerHTML = `
+                            <p><strong>First Name:</strong> ${userData.firstName}</p>
+                            <p><strong>Last Name:</strong> ${userData.lastName}</p>
+                            <p><strong>Email:</strong> ${userData.email}</p>
+                        `;
+                    } else {
+                        console.log("No user data found.");
+                    }
+                }).catch((error) => {
+                    console.error("Error fetching user data:", error);
                 });
-            });
+    
+                // Update user data when the form is submitted
+                document.getElementById('edit-profile-form').addEventListener('submit', (event) => {
+                    event.preventDefault();
+    
+                    const firstName = document.getElementById('first-name').value;
+                    const lastName = document.getElementById('last-name').value;
+                    const email = document.getElementById('email').value;
+    
+                    update(userRef, {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email
+                    }).then(() => {
+                        alert('Profile updated successfully!');
+                        document.getElementById('profile-info').innerHTML = `
+                            <p><strong>First Name:</strong> ${firstName}</p>
+                            <p><strong>Last Name:</strong> ${lastName}</p>
+                            <p><strong>Email:</strong> ${email}</p>
+                        `;
+                    }).catch((error) => {
+                        console.error("Error updating user data:", error);
+                    });
+                });
+            } else {
+                // If user is not logged in, redirect to login page
+                window.location.href = "index.html";
+            }
         });
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

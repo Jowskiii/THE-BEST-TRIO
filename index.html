@@ -205,11 +205,12 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import { getAuth, sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js"; // Import Firestore functions
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js"; // Import Realtime Database functions
 
     const firebaseConfig = {
         apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
         authDomain: "isukat.firebaseapp.com",
+        databaseURL: "https://isukat-default-rtdb.firebaseio.com", // Realtime Database URL
         projectId: "isukat",
         storageBucket: "isukat.appspot.com",
         messagingSenderId: "751168754443",
@@ -219,7 +220,7 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
-    const db = getFirestore(app); // Initialize Firestore
+    const db = getDatabase(app); // Initialize Realtime Database
 
     // Login form submission
     const loginForm = document.getElementById('loginForm');
@@ -249,23 +250,12 @@
         e.preventDefault();
         const email = document.getElementById('forgotEmail').value;
 
-        if (!forgotPasswordForm.checkValidity()) {
-            forgotPasswordForm.classList.add('was-validated');
-            return;
-        }
-
-        const resetStatus = document.getElementById('resetStatus');
-        resetStatus.innerHTML = '';
-
         sendPasswordResetEmail(auth, email)
             .then(() => {
-                resetStatus.innerHTML = '<div class="alert alert-success" role="alert">Reset email sent successfully!</div>';
+                alert('Reset email sent successfully!');
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error('Error during password reset:', errorCode, errorMessage);
-                resetStatus.innerHTML = `<div class="alert alert-danger" role="alert">Failed to send reset email: ${errorMessage}</div>`;
+                alert('Failed to send reset email: ' + error.message);
             });
     });
 
@@ -283,23 +273,21 @@
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Save user profile to Firestore
-            await setDoc(doc(db, "users", user.uid), {
+            // Save user profile to Realtime Database
+            await set(ref(db, 'users/' + user.uid), {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                createdAt: new Date()
+                createdAt: new Date().toISOString()
             });
 
             alert('Signup successful!');
             console.log('Signed up user:', user);
         } catch (error) {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert('Signup failed: ' + errorMessage);
-            console.error('Error during signup:', errorCode, errorMessage);
+            alert('Signup failed: ' + error.message);
         }
     });
 </script>
+
 </body>
 </html>
