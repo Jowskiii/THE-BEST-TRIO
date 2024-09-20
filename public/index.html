@@ -3,289 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Signup</title>
+    <title>iSUKAT - Login & Signup</title>
+    <link rel="icon" type="image/x-icon" href="images/LOGO.ico">
+    <!-- Bootstrap 4.5.2 CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome 5.15.3 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: url('/public/images/iSUKATBG.webp') no-repeat center center fixed;
+            font-family: 'Arial', sans-serif;
+            background-image: url(images/iSUKATBG.webp);
             background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            color: white;
         }
-        .content {
+
+        .container {
+            width: 100%;
+            max-width: 400px;
             padding: 20px;
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
             text-align: center;
-            color: rgb(0, 0, 0);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-        .modal-content {
-            border-radius: 8px;
+
+        .form-group {
+            margin-bottom: 20px;
         }
-        .modal-body {
-            padding: 20px;
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            padding: 15px;
         }
-        .img-fluid {
-            max-width: 100%;
-            height: auto;
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
-        .form-group label {
+
+        .btn {
+            border-radius: 25px;
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px 0;
+            width: 100%;
             font-weight: bold;
         }
-        .form-control {
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        .btn {
-            border-radius: 4px;
-            font-size: 16px;
-        }
+
         .btn-primary {
-            background-color: #323832;
-            border-color: #323832;
+            background-color: white;
+            border-color: white;
+            color: #d11414;
         }
-        .btn-primary:hover {
-            background-color: #323832;
-            border-color: #323832;
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
         }
-        .text-primary {
-            color: #b2b6b8;
+
+        .link-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
         }
-        .text-center {
+
+        .link-text a {
+            color: #ffa500;
+            text-decoration: underline;
+        }
+
+        .logo {
             text-align: center;
         }
-        .button-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
+
+        #welcomeScreen, #loginForm, #signupForm {
+            display: none;
         }
-        .image-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 20px;
+
+        .active {
+            display: block !important;
         }
-        .image-box {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 300px;
-            max-width: 45%;
-            margin: 10px;
+
+        .password-container {
+            position: relative;
         }
-        .image-box img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border: 1px solid #000;
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
         }
-        @media (max-width: 768px) {
-            .image-box {
-                max-width: 100%;
-            }
+
+        .password-toggle:hover {
+            color: white;
         }
+
+        /* Alert Styles */
+        .alert-container {
+            position: absolute;
+            top: 10px;
+            width: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .logo-img {
+            position: relative;
+            width: 200px; /* Adjust this value as needed */
+            height: auto; /* Maintain aspect ratio */
+            overflow: hidden;
+        }
+
     </style>
 </head>
 <body>
-    <div class="content">
-        <h1>Welcome to Our Service</h1>
-        <p>Here you can learn more about our features and how to get started.</p>
-    </div>
 
-    <div class="image-container">
-        <div class="image-box">
-            <p>TEXT ABOUT INFORMATION ANY CHUHCHU SHIET</p>
-            <img src="/public/images/lebron.jpg" alt="Image 1">
-        </div>
-        <div class="image-box">
-            <p>TEXT ABOUT INFORMATION ANY CHUHCHU SHIET</p>
-            <img src="/public/images/lebron.jpg" alt="Image 2">
-        </div>
-    </div>
+<div class="container">
+    <div class="card position-relative">
+        <!-- Alert Container -->
+        <div id="alertContainer" class="alert-container"></div>
 
-    <!-- Trigger Button for Login Modal -->
-    <div class="button-container">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-            GET STARTED
-        </button>
-    </div>
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <img id="loginimage" src="/public/images/lebron.jpg" class="img-fluid mx-auto d-block" alt="Login Logo">
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="loginEmail">Email address</label>
-                            <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required pattern=".{6,16}" title="Password must be 6 to 16 characters long">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
-                        <div class="text-center mt-3">
-                            <a href="#" class="text-primary" data-toggle="modal" data-target="#forgotPasswordModal" data-dismiss="modal">Forgot Password?</a>
-                        </div>
-                    </form>
-                </div>
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="active">
+            <div class="logo">
+                <img src="images/LOGO.png" alt="iSUKAT" class="logo-img">
             </div>
+            <h1>iSUKAT</h1>
+            <button class="btn btn-primary" id="showLogin">SIGN IN</button>
+            <button class="btn btn-secondary" id="showSignup">SIGN UP</button>
         </div>
-    </div>
 
-    <!-- Forgot Password Modal -->
-    <div id="forgotPasswordModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h5 class="modal-title text-center">Reset Password</h5>
-                    <form id="forgotPasswordForm" novalidate>
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="forgotEmail" placeholder="Enter your email" required>
-                            <div class="invalid-feedback">Please enter a valid email.</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Send Reset Email</button>
-                    </form>
-                    <div id="resetStatus" class="mt-3 text-center"></div>
+        <!-- Login Form -->
+        <div id="loginForm">
+            <h1>Hello<br>Sign in!</h1>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div id="registerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <img id="registerimage" src="images/loginlogo.png" class="img-fluid mx-auto d-block" alt="Register Logo">
-                    <form id="registerForm" novalidate>
-                        <div class="form-group">
-                            <label for="registerEmail">Email address</label>
-                            <input type="email" class="form-control" id="registerEmail" placeholder="Enter email" required>
-                            <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">Please enter a valid email.</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="registerPassword">Password</label>
-                            <input type="password" class="form-control" id="registerPassword" placeholder="Password" required pattern=".{6,16}" title="Password must be 6 to 16 characters long">
-                            <div class="valid-feedback">Strong password!</div>
-                            <div class="invalid-feedback">Password must be 6 to 16 characters long.</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required pattern="[A-Za-z\s]+" title="First Name should only contain letters and spaces">
-                            <div class="valid-feedback"></div>
-                            <div class="invalid-feedback">First Name should only contain letters and spaces.</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required pattern="[A-Za-z\s]+" title="Last Name should only contain letters and spaces">
-                            <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">Last Name should only contain letters and spaces.</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </form>
+                <div class="form-group password-container">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                    <i class="fas fa-eye password-toggle" data-target="loginPassword"></i>
                 </div>
-            </div>
+                <div class="link-text text-right mb-3">
+                    <a href="#" id="forgotPasswordLink">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">SIGN IN</button>
+                <div class="link-text">
+                    <span>Don't have an account? </span><a href="#" id="gotoSignup">Sign up</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signupForm">
+            <h1>Create Your<br>Account</h1>
+            <form id="signupFormElement">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="signupName" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="signupEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group password-container">
+                    <input type="password" class="form-control" id="signupPassword" placeholder="Password" required minlength="6" maxlength="16">
+                    <i class="fas fa-eye password-toggle" data-target="signupPassword"></i>
+                </div>
+                <div class="form-group password-container">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required minlength="6" maxlength="16">
+                    <i class="fas fa-eye password-toggle" data-target="confirmPassword"></i>
+                </div>
+                <button type="submit" class="btn btn-primary">SIGN UP</button>
+                <div class="link-text">
+                    <span>Already have an account? </span><a href="#" id="gotoLogin">Sign In</a>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <!-- JavaScript dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- JavaScript dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
+<!-- Firebase SDKs -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import { getAuth, sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js"; // Import Realtime Database functions
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
+    // Your web app's Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
         authDomain: "isukat.firebaseapp.com",
-        databaseURL: "https://isukat-default-rtdb.firebaseio.com", // Realtime Database URL
+        databaseURL: "https://isukat-default-rtdb.firebaseio.com",
         projectId: "isukat",
         storageBucket: "isukat.appspot.com",
-        messagingSenderId: "751168754443",
-        appId: "1:751168754443:web:e96a67dab5e30f077a080e",
-        measurementId: "G-J090BFT08X"
+        messagingSenderId: "164612077115",
+        appId: "1:164612077115:web:648a64b3d0c99ce3b937d7",
+        measurementId: "G-ND0CBJFSQ1"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getDatabase(app); // Initialize Realtime Database
+    const auth = getAuth(app);
+    const database = getDatabase(app);
 
-    // Login form submission
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', (e) => {
+    // Helper to show alerts
+    function showAlert(type, message) {
+        $('#alertContainer').html(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>`);
+    }
+
+    // Handle navigation
+    function navigateTo(target) {
+        $('.card > div').removeClass('active');
+        $(`#${target}`).addClass('active');
+    }
+
+    // Show login form
+    $('#showLogin, #gotoLogin').on('click', function () {
+        navigateTo('loginForm');
+    });
+
+    // Show signup form
+    $('#showSignup, #gotoSignup').on('click', function () {
+        navigateTo('signupForm');
+    });
+
+    // Show forgot password form (could also be done separately)
+    $('#forgotPasswordLink').on('click', function () {
+        const email = prompt("Enter your email to reset your password:");
+        if (email) {
+            sendPasswordResetEmail(auth, email)
+                .then(() => showAlert('success', 'Password reset email sent.'))
+                .catch(error => showAlert('danger', error.message));
+        }
+    });
+
+    // Login handler
+    $('#loginFormElement').on('submit', function (e) {
         e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
+        const email = $('#loginEmail').val();
+        const password = $('#loginPassword').val();
 
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                alert('Login successful!');
-                console.log('Logged in user:', user);
-                window.location.href = 'homepage.html';
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert('Login failed: ' + errorMessage);
-                console.error('Error during login:', errorCode, errorMessage);
-            });
-    });
-
-    // Forgot password form submission
-    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-    forgotPasswordForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('forgotEmail').value;
-
-        sendPasswordResetEmail(auth, email)
             .then(() => {
-                alert('Reset email sent successfully!');
+                showAlert('success', 'Login successful!');
+                window.location.href = 'homepage.html';  // Redirect to homepage
             })
-            .catch((error) => {
-                alert('Failed to send reset email: ' + error.message);
-            });
+            .catch(error => showAlert('danger', error.message));
     });
 
-    // Signup form submission
-    const signupForm = document.getElementById('registerForm');
-    signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    // Signup handler
+    $('#signupFormElement').on('submit', function (e) {
+    e.preventDefault();
+    const name = $('#signupName').val();
+    const email = $('#signupEmail').val();
+    const password = $('#signupPassword').val();
+    const confirmPassword = $('#confirmPassword').val();
 
-        const email = document.getElementById('registerEmail').value;
-        const password = document.getElementById('registerPassword').value;
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
+    if (password !== confirmPassword) {
+        showAlert('danger', 'Passwords do not match.');
+        return;
+    }
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
             const user = userCredential.user;
-
-            // Save user profile to Realtime Database
-            await set(ref(db, 'users/' + user.uid), {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                createdAt: new Date().toISOString()
+            // Store user info in the database
+            set(ref(database, 'users/' + user.uid), {
+                name: name,
+                email: email
             });
+            // Show success alert
+            showAlert('success', 'Signup successful! Please log in with your credentials.');
 
-            alert('Signup successful!');
-            console.log('Signed up user:', user);
-        } catch (error) {
-            alert('Signup failed: ' + error.message);
-        }
+            // Navigate to the login form
+            navigateTo('loginForm');
+
+            // Pre-fill the email field with the signed-up email
+            $('#loginEmail').val(email);
+            $('#loginPassword').val(''); // Clear the password field
+
+        })
+        .catch(error => showAlert('danger', error.message));
+});
+
+    // Password toggle visibility
+    $('.password-toggle').on('click', function () {
+        const target = $(this).data('target');
+        const input = $(`#${target}`);
+        const type = input.attr('type') === 'password' ? 'text' : 'password';
+        input.attr('type', type);
+        $(this).toggleClass('fa-eye fa-eye-slash');
     });
 </script>
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iSUKAT - Homepage</title>
+    <link rel="icon" type="image/x-icon" href="images/LOGO.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         .logo-img {
@@ -36,10 +37,133 @@
             max-width: 100px;
             margin-right: 20px;
         }
+                body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            background: #f9f9f9;
+            margin-top: 56px; /* Adjust for fixed navbar */
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .product-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-item p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-item .price {
+            font-size: 1.2rem;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+        }
+
+        .footer-content {
+            margin-bottom: 20px;
+        }
+
+        .footer-content .highlight {
+            color: #ffc107;
+        }
+
+        nav.top-nav {
+            display: flex;
+            justify-content: space-around;
+            background: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        nav.top-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        nav.top-nav a:hover {
+            background: #575757;
+            border-radius: 5px;
+        }
+        .logo-img {
+            margin-top: -20px; 
+            margin-bottom: -20px; 
+            width: 75px; 
+            height: 75px; 
+        }
+        .navbar-nav .nav-link {
+            font-size: 16px; /* Adjust font size */
+            padding: 10px;   /* Adjust spacing */
+        }
+        .bg-dark {
+            --bs-bg-opacity: 1;
+            background-color: #440107 !important;
+        }
+
+        @media (max-width: 768px) {
+            .product-item {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .bottom-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .bottom-nav .nav-button {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="images/LOGO.png" alt="iSUKAT" class="d-inline-block align-top logo-img">
@@ -52,7 +176,7 @@
                     <li class="nav-item">
                         <a class="nav-link active d-flex align-items-center" aria-current="page" href="homepage.html">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house me-2" viewBox="0 0 16 16">
-                                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"></path>
+                                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
                             </svg>
                             Home
                         </a>
@@ -60,8 +184,8 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center" href="footcare.html">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmark-heart me-2" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"></path>
-                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zM2 1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"></path>
+                                <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
                             </svg>
                             Footcare
                         </a>
