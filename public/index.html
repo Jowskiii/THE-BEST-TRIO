@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/public/images/iSUKATBG.webp') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+        }
+        .modal-content {
+            border-radius: 8px;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .btn {
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn-primary {
+            background-color: #323832;
+            border-color: #323832;
+        }
+        .btn-primary:hover {
+            background-color: #323832;
+            border-color: #323832;
+        }
+        .text-primary {
+            color: #b2b6b8;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .image-box {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 300px;
+            max-width: 45%;
+            margin: 10px;
+        }
+        .image-box img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border: 1px solid #000;
+        }
+        @media (max-width: 768px) {
+            .image-box {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome to Our Service</h1>
+        <p>Here you can learn more about our features and how to get started.</p>
+    </div>
+
+    <div class="image-container">
+        <div class="image-box">
+            <p>TEXT ABOUT INFORMATION ANY CHUHCHU SHIET</p>
+            <img src="/public/images/lebron.jpg" alt="Image 1">
+        </div>
+        <div class="image-box">
+            <p>TEXT ABOUT INFORMATION ANY CHUHCHU SHIET</p>
+            <img src="/public/images/lebron.jpg" alt="Image 2">
+        </div>
+    </div>
+
+    <!-- Trigger Button for Login Modal -->
+    <div class="button-container">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+            GET STARTED
+        </button>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="loginimage" src="/public/images/lebron.jpg" class="img-fluid mx-auto d-block" alt="Login Logo">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required pattern=".{6,16}" title="Password must be 6 to 16 characters long">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-primary" data-toggle="modal" data-target="#forgotPasswordModal" data-dismiss="modal">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-title text-center">Reset Password</h5>
+                    <form id="forgotPasswordForm" novalidate>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="forgotEmail" placeholder="Enter your email" required>
+                            <div class="invalid-feedback">Please enter a valid email.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Reset Email</button>
+                    </form>
+                    <div id="resetStatus" class="mt-3 text-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="registerimage" src="images/loginlogo.png" class="img-fluid mx-auto d-block" alt="Register Logo">
+                    <form id="registerForm" novalidate>
+                        <div class="form-group">
+                            <label for="registerEmail">Email address</label>
+                            <input type="email" class="form-control" id="registerEmail" placeholder="Enter email" required>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please enter a valid email.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Password" required pattern=".{6,16}" title="Password must be 6 to 16 characters long">
+                            <div class="valid-feedback">Strong password!</div>
+                            <div class="invalid-feedback">Password must be 6 to 16 characters long.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required pattern="[A-Za-z\s]+" title="First Name should only contain letters and spaces">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">First Name should only contain letters and spaces.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required pattern="[A-Za-z\s]+" title="Last Name should only contain letters and spaces">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Last Name should only contain letters and spaces.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js"; // Import Realtime Database functions
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAsXxiBkpkOywb7goIfcBRBnB8vNPt9hjc",
+        authDomain: "isukat.firebaseapp.com",
+        databaseURL: "https://isukat-default-rtdb.firebaseio.com", // Realtime Database URL
+        projectId: "isukat",
+        storageBucket: "isukat.appspot.com",
+        messagingSenderId: "751168754443",
+        appId: "1:751168754443:web:e96a67dab5e30f077a080e",
+        measurementId: "G-J090BFT08X"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getDatabase(app); // Initialize Realtime Database
+
+    // Login form submission
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                alert('Login successful!');
+                console.log('Logged in user:', user);
+                window.location.href = 'homepage.html';
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('Login failed: ' + errorMessage);
+                console.error('Error during login:', errorCode, errorMessage);
+            });
+    });
+
+    // Forgot password form submission
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    forgotPasswordForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('forgotEmail').value;
+
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert('Reset email sent successfully!');
+            })
+            .catch((error) => {
+                alert('Failed to send reset email: ' + error.message);
+            });
+    });
+
+    // Signup form submission
+    const signupForm = document.getElementById('registerForm');
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Save user profile to Realtime Database
+            await set(ref(db, 'users/' + user.uid), {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                createdAt: new Date().toISOString()
+            });
+
+            alert('Signup successful!');
+            console.log('Signed up user:', user);
+        } catch (error) {
+            alert('Signup failed: ' + error.message);
+        }
+    });
+</script>
+
+</body>
+</html>
