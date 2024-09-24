@@ -2,14 +2,28 @@ const express = require('express');
 const path = require('path');
 const SneaksAPI = require('sneaks-api');
 const sneaks = new SneaksAPI();
+const multer = require('multer');
+const fs = require('fs');
+const axios = require('axios');
+
+// Initialize express
 const app = express();
 const PORT = process.env.PORT || 3028;
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
 
 // Serve all static files (HTML, CSS, JS, images) from the public directory
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Serve homepage.html for both root and /homepage routes
-app.get(['/', '/homepage'], (req, res) => {
+// Serve files from the uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Sneaks API Route
+app.get(['/','/homepage'], (req, res) => {
     res.sendFile(path.join(__dirname, '../public/homepage.html'));
 });
 
@@ -24,13 +38,8 @@ app.get('/shoes', (req, res) => {
     });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
 
 // Start the server
-app.listen(3028, () => {
-    console.log(`Server is running on port http://localhost:3028`);
+app.listen(PORT, () => {
+    console.log(`Server is running on port http://localhost:${PORT}`);
 });
