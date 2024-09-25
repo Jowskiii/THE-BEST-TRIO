@@ -4,134 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footcare</title>
-    <!-- Bootstrap CSS -->
+    <title>Footcare Essentials</title>
     <link rel="icon" type="image/x-icon" href="images/LOGO.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/footcare.css">
-    
-</head>
-<style>
-            body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            box-sizing: border-box;
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
         }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        main {
-            flex: 1;
-            padding: 20px;
-            background: #f9f9f9;
-            margin-top: 56px; /* Adjust based on navbar height */
-        }
-
-        .footcare-section {
-            margin-bottom: 40px;
-        }
-
-        .footcare-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        .footcare-section p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .healthy-shoes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .shoe-item {
-            flex: 1 1 calc(33.333% - 20px);
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .shoe-item img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        .shoe-item h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .shoe-item p {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            color: #666;
-        }
-
-        footer {
-            background: #343a40;
-            color: white;
-            text-align: center;
-            padding: 10px 20px;
-        }
-
-        .footer-content {
-            margin-bottom: 20px;
-        }
-
-        .footer-content .highlight {
-            color: #ffc107;
-        }
+        /* Logo adjustments */
         .logo-img {
             margin-top: -20px; 
             margin-bottom: -20px; 
             width: 75px; 
             height: 75px; 
         }
+
+        /* Navbar adjustments */
         .navbar-nav .nav-link {
             font-size: 16px; /* Adjust font size */
             padding: 10px;   /* Adjust spacing */
         }
         .bg-dark {
-            --bs-bg-opacity: 1;
-            background-color: #440107 !important;
+        --bs-bg-opacity: 1;
+        background-color: #440107 !important;
         }
-        
-
-        @media (max-width: 768px) {
-            .shoe-item {
-                flex: 1 1 calc(50% - 20px);
-            }
+        header {
+            background: linear-gradient(135deg, #440107, #8B0000);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 40px;
         }
-
-        @media (max-width: 576px) {
-            .shoe-item {
-                flex: 1 1 100%;
-            }
+        header h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
+        .section-title {
+            color: #440107;
+            font-weight: 600;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #440107;
+        }
+        .footcare-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        .footcare-section p, .footcare-section li {
+            font-weight: 300;
+            line-height: 1.8;
+        }
+        .shoe-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .shoe-item:hover {
+            transform: translateY(-5px);
+        }
+        .shoe-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        footer {
+            background-color: #440107;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        .highlight {
+            color: #FFD700;
+            font-weight: 600;
+        }
+    </style>
+</head>
 
-</style>
 <body>
-    <!-- Fixed Top Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+     <!-- Fixed Top Navbar -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="images/LOGO.png" alt="iSUKAT" width="100" height="100" class="d-inline-block align-top logo-img">
@@ -190,50 +151,161 @@
             </div>
         </div>
     </nav>
-    
 
-    <header>
-        <h1>Footcare & Healthy Shoes</h1>
+    <header class="mb-5">
+        <div class="container">
+            <h1 class="display-4">Footcare Essentials: Happy Feet, Healthy You</h1>
+            <p class="lead">Discover the secrets to maintaining healthy, happy feet for life.</p>
+        </div>
     </header>
 
-    <main>
-        <div class="footcare-section">
-            <h2>Importance of Footcare</h2>
-            <p>Foot care is essential for maintaining overall health and well-being. Proper foot hygiene and regular check-ups can prevent common foot problems such as infections, corns, calluses, and even more severe conditions like diabetes-related complications.</p>
-            <p>Healthy feet also contribute to better posture, reduced pain in the knees and lower back, and overall improved quality of life. Incorporating daily foot care practices, such as washing, moisturizing, and wearing the right shoes, is crucial.</p>
-        </div>
+    <main class="container">
+        <section class="footcare-section">
+            <h2 class="section-title">The Importance of Footcare</h2>
+            <p>Our feet bear the weight of our entire body and carry us through life's journey. Proper foot care is crucial for overall health and well-being. Neglecting your feet can lead to various issues, from minor discomfort to severe health problems.</p>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h4>Regular foot care can prevent:</h4>
+                    <ul>
+                        <li>Fungal infections like athlete's foot</li>
+                        <li>Ingrown toenails</li>
+                        <li>Corns and calluses</li>
+                        <li>Foot odor</li>
+                        <li>Diabetic foot complications</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <img src="images/healthy-feet.jpg" alt="Healthy Feet" class="img-fluid rounded">
+                </div>
+            </div>
+        </section>
 
-        <div class="footcare-section">
-            <h2>Choosing Healthy Shoes</h2>
-            <p>Wearing the right shoes is key to preventing foot problems. Shoes should provide adequate support, fit properly, and be appropriate for the activity. Look for shoes with a wide toe box, good arch support, and a cushioned sole. Avoid high heels and shoes that are too tight, as these can lead to discomfort and long-term foot issues.</p>
-        </div>
+        <section class="footcare-section">
+            <h2 class="section-title">Daily Foot Care Routine</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <ol>
+                        <li><strong>Wash your feet daily:</strong> Use warm water and mild soap. Don't forget to dry thoroughly, especially between toes.</li>
+                        <li><strong>Moisturize:</strong> Apply a good foot cream to keep skin soft and prevent cracks. Avoid between toes to prevent fungal growth.</li>
+                        <li><strong>Trim nails properly:</strong> Cut straight across and file edges to prevent ingrown toenails.</li>
+                        <li><strong>Examine your feet:</strong> Check for cuts, sores, or changes in color and temperature.</li>
+                        <li><strong>Wear clean, dry socks:</strong> Change socks daily and choose moisture-wicking materials.</li>
+                    </ol>
+                </div>
+                <div class="col-md-6">
+                    <img src="images/foot-care-routine.jpg" alt="Foot Care Routine" class="img-fluid rounded">
+                </div>
+            </div>
+        </section>
 
-        <div class="footcare-section healthy-shoes">
-            <div class="shoe-item">
-                <img src="images/classic.jpg" alt="Comfortable Walking Shoes">
-                <h3>Comfortable Walking Shoes</h3>
-                <p>Designed with a cushioned sole and breathable material, these shoes offer excellent support for daily walking activities.</p>
+        <section class="footcare-section">
+            <h2 class="section-title">Choosing the Right Shoes</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>Proper footwear is crucial for foot health. Here's how to choose the right shoes:</p>
+                    <ul>
+                        <li><strong>Size matters:</strong> Always measure your feet before buying shoes. Feet can change size over time.</li>
+                        <li><strong>Width is important:</strong> Ensure there's enough room in the toe box to wiggle your toes.</li>
+                        <li><strong>Consider the activity:</strong> Different activities require different types of support.</li>
+                        <li><strong>Check the arch support:</strong> Proper arch support can prevent pain and fatigue.</li>
+                        <li><strong>Feel the heel:</strong> The heel should fit snugly without slipping.</li>
+                        <li><strong>Try shoes on later in the day:</strong> Feet tend to swell as the day progresses.</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <img src="images/choosing-shoes.jpg" alt="Choosing the Right Shoes" class="img-fluid rounded">
+                </div>
             </div>
-            <div class="shoe-item">
-                <img src="images/ortho.jpg" alt="Orthopedic Shoes">
-                <h3>Orthopedic Shoes</h3>
-                <p>Perfect for those with foot problems, these shoes provide extra support and help alleviate pain and discomfort.</p>
+        </section>
+
+        <section class="footcare-section">
+            <h2 class="section-title">Common Foot Problems and Solutions</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Athlete's Foot</h3>
+                            <p class="card-text">A fungal infection causing itching and burning. Keep feet dry and use antifungal treatments.</p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Plantar Fasciitis</h3>
+                            <p class="card-text">Heel pain caused by inflammation. Stretch regularly and wear supportive shoes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Bunions</h3>
+                            <p class="card-text">Bony bumps at the base of the big toe. Wear wide shoes and use padding for comfort.</p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Ingrown Toenails</h3>
+                            <p class="card-text">Painful condition where the nail grows into the skin. Trim nails straight across and wear proper fitting shoes.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="shoe-item">
-                <img src="images/running.jpg" alt="Running Shoes">
-                <h3>Running Shoes</h3>
-                <p>These shoes offer superior cushioning and support, ideal for runners and those who engage in high-impact activities.</p>
+        </section>
+
+        <section class="footcare-section">
+            <h2 class="section-title">Recommended Footwear for Healthy Feet</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="shoe-item">
+                        <img src="images/classic.jpg" alt="Comfortable Walking Shoes" class="img-fluid">
+                        <h3>Comfortable Walking Shoes</h3>
+                        <p>Look for shoes with good arch support, cushioned soles, and breathable materials for daily wear.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="shoe-item">
+                        <img src="images/ortho.jpg" alt="Orthopedic Shoes" class="img-fluid">
+                        <h3>Orthopedic Shoes</h3>
+                        <p>Ideal for those with foot problems, offering extra support and custom fitting options.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="shoe-item">
+                        <img src="images/running.jpg" alt="Athletic Shoes" class="img-fluid">
+                        <h3>Athletic Shoes</h3>
+                        <p>Choose shoes specific to your activity, with proper cushioning and support for high-impact movements.</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section class="footcare-section">
+            <h2 class="section-title">When to See a Podiatrist</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>Consult a foot specialist if you experience:</p>
+                    <ul>
+                        <li>Persistent pain or swelling</li>
+                        <li>Changes in skin or nail color</li>
+                        <li>Numbness or tingling in feet</li>
+                        <li>Open sores that don't heal</li>
+                        <li>Signs of infection (redness, warmth, pus)</li>
+                    </ul>
+                    <p>Regular check-ups are especially important for people with diabetes or circulation problems.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="images/podiatrist-visit.jpg" alt="Podiatrist Visit" class="img-fluid rounded">
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p>Take care of your feet the <span class="highlight">right</span> way</p>
+        <div class="container">
+            <p class="m-0">Step into a healthier life with proper <span class="highlight">footcare</span></p>
         </div>
     </footer>
 
-    <!-- Bootstrap JS (Optional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
