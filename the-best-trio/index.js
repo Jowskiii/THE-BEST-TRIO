@@ -28,7 +28,7 @@ app.get(['/','/homepage'], (req, res) => {
 });
 
 app.get('/shoes', (req, res) => {
-    sneaks.getProducts("Nike", 10, function(err, products) {
+    sneaks.getProducts("", 50, function(err, products) {
         if (err) {
             console.error('Error fetching products:', err);
             res.status(500).json({ error: 'Error fetching products' });
