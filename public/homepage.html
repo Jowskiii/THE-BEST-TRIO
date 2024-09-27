@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iSUKAT - Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
@@ -143,103 +145,125 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchShoes();
+    <script type="module" src="favorite-sync.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="favorite-sync.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchShoes();
+        initializeFavorites();
+    });
+
+    function fetchShoes() {
+        axios.get('/shoes')
+            .then(function (response) {
+                const shoes = response.data;
+                displayShoes(shoes);
+            })
+            .catch(function (error) {
+                console.error('Error fetching shoes:', error);
+            });
+    }
+
+    function displayShoes(shoes) {
+        const productGrid = document.getElementById('product-grid');
+        productGrid.innerHTML = '';
+
+        shoes.forEach(shoe => {
+            const shoeCard = document.createElement('div');
+            shoeCard.className = 'product-card position-relative';
+            shoeCard.innerHTML = `
+                <img src="${shoe.thumbnail}" alt="${shoe.shoeName}">
+                <h3>${shoe.shoeName}</h3>
+                <p>Brand: ${shoe.brand}</p>
+                <p>Price: $${shoe.retailPrice}</p>
+                <button class="btn btn-primary" onclick="showShoeDetails(${JSON.stringify(shoe).replace(/"/g, '&quot;')})">View Details</button>
+                <button class="favorite-btn" onclick="toggleFavorite(this, '${shoe.id}')">
+                    <i class="bi bi-heart${isFavorite(shoe.id) ? '-fill' : ''}"></i>
+                </button>
+            `;
+            productGrid.appendChild(shoeCard);
         });
+    }
 
-        function fetchShoes() {
-            axios.get('/shoes')
-                .then(function (response) {
-                    const shoes = response.data;
-                    displayShoes(shoes);
-                })
-                .catch(function (error) {
-                    console.error('Error fetching shoes:', error);
-                });
+    function showShoeDetails(shoe) {
+        const modalBody = document.getElementById('shoeModalBody');
+        modalBody.innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="${shoe.thumbnail}" alt="${shoe.shoeName}" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h2>${shoe.shoeName}</h2>
+                    <p><strong>Brand:</strong> ${shoe.brand}</p>
+                    <p><strong>Price:</strong> $${shoe.retailPrice}</p>
+                    <p><strong>Colorway:</strong> ${shoe.colorway}</p>
+                    <p><strong>Release Date:</strong> ${shoe.releaseDate}</p>
+                    <h4>Available Sizes:</h4>
+                    <table class="size-table">
+                        ${generateSizeTable(shoe.lowestResellPrice)}
+                    </table>
+                    <button class="btn btn-primary mt-3">Visit Site</button>
+                </div>
+            </div>
+        `;
+        const shoeModal = new bootstrap.Modal(document.getElementById('shoeModal'));
+        shoeModal.show();
+    }
+
+    function generateSizeTable(sizes) {
+        let html = '';
+        const sizeRows = Math.ceil(Object.keys(sizes).length / 4);
+        for (let i = 0; i < sizeRows; i++) {
+            html += '<tr>';
+            for (let j = 0; j < 4; j++) {
+                const index = i * 4 + j;
+                const size = Object.keys(sizes)[index];
+                if (size) {
+                    html += `<td>${size}<br>$${sizes[size]}</td>`;
+                } else {
+                    html += '<td></td>';
+                }
+            }
+            html += '</tr>';
         }
+        return html;
+    }
 
-        function displayShoes(shoes) {
-            const productGrid = document.getElementById('product-grid');
-            productGrid.innerHTML = '';
+    // New functions for favorite feature
+    function initializeFavorites() {
+        // This function should be implemented in favorite-sync.js
+        // It should set up the connection to Firebase and load initial favorites
+        if (typeof initFavoritesSync === 'function') {
+            initFavoritesSync();
+        }
+    }
 
-            shoes.forEach(shoe => {
-                const shoeCard = document.createElement('div');
-                shoeCard.className = 'product-card position-relative';
-                shoeCard.innerHTML = `
-                    <img src="${shoe.thumbnail}" alt="${shoe.shoeName}">
-                    <h3>${shoe.shoeName}</h3>
-                    <p>Brand: ${shoe.brand}</p>
-                    <p>Price: $${shoe.retailPrice}</p>
-                    <button class="btn btn-primary" onclick="showShoeDetails(${JSON.stringify(shoe).replace(/"/g, '&quot;')})">View Details</button>
-                    <button class="favorite-btn" onclick="toggleFavorite(this, '${shoe.id}')">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                `;
-                productGrid.appendChild(shoeCard);
+    function toggleFavorite(button, shoeId) {
+        if (typeof toggleFavoriteItem === 'function') {
+            toggleFavoriteItem(shoeId).then(isFavorite => {
+                updateFavoriteButton(button, isFavorite);
             });
         }
+    }
 
-        function showShoeDetails(shoe) {
-            const modalBody = document.getElementById('shoeModalBody');
-            modalBody.innerHTML = `
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="${shoe.thumbnail}" alt="${shoe.shoeName}" class="img-fluid">
-                    </div>
-                    <div class="col-md-6">
-                        <h2>${shoe.shoeName}</h2>
-                        <p><strong>Brand:</strong> ${shoe.brand}</p>
-                        <p><strong>Price:</strong> $${shoe.retailPrice}</p>
-                        <p><strong>Colorway:</strong> ${shoe.colorway}</p>
-                        <p><strong>Release Date:</strong> ${shoe.releaseDate}</p>
-                        <h4>Available Sizes:</h4>
-                        <table class="size-table">
-                            ${generateSizeTable(shoe.lowestResellPrice)}
-                        </table>
-                        <button class="btn btn-primary mt-3">Visit Site</button>
-                    </div>
-                </div>
-            `;
-            const shoeModal = new bootstrap.Modal(document.getElementById('shoeModal'));
-            shoeModal.show();
+    function updateFavoriteButton(button, isFavorite) {
+        const icon = button.querySelector('i');
+        if (isFavorite) {
+            icon.classList.remove('bi-heart');
+            icon.classList.add('bi-heart-fill');
+        } else {
+            icon.classList.remove('bi-heart-fill');
+            icon.classList.add('bi-heart');
         }
+    }
 
-        function generateSizeTable(sizes) {
-            let html = '';
-            const sizeRows = Math.ceil(Object.keys(sizes).length / 4);
-            for (let i = 0; i < sizeRows; i++) {
-                html += '<tr>';
-                for (let j = 0; j < 4; j++) {
-                    const index = i * 4 + j;
-                    const size = Object.keys(sizes)[index];
-                    if (size) {
-                        html += `<td>${size}<br>$${sizes[size]}</td>`;
-                    } else {
-                        html += '<td></td>';
-                    }
-                }
-                html += '</tr>';
-            }
-            return html;
-        }
-
-        function toggleFavorite(btn, shoeId) {
-            btn.classList.toggle('active');
-            const isFavorite = btn.classList.contains('active');
-            
-            // Save favorite status to localStorage
-            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            if (isFavorite) {
-                favorites.push(shoeId);
-            } else {
-                const index = favorites.indexOf(shoeId);
-                if (index > -1) {
-                    favorites.splice(index, 1);
-                }
-            }
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        }
-    </script>
+    function isFavorite(shoeId) {
+        // This function should be implemented in favorite-sync.js
+        // It should return true if the shoe is a favorite, false otherwise
+        return typeof checkFavoriteStatus === 'function' ? checkFavoriteStatus(shoeId) : false;
+    }
+</script>
 </body>
 </html>
