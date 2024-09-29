@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Detection Web App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #video, #canvas { width: 100%; max-width: 640px; }
+        #result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Image Detection Web App</h1>
+    <video id="video" autoplay></video>
+    <button id="capture">Capture Image</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <div id="result"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureButton = document.getElementById('capture');
+        const resultDiv = document.getElementById('result');
+
+        // Access the device camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Error accessing the camera", err);
+            });
+
+        captureButton.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            
+            // Convert canvas to blob
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('file', blob, 'capture.jpg');
+
+                // Send image to Roboflow for inference
+                axios.post('https://detect.roboflow.com/foot-size/2', formData, {
+                    params: {
+                        api_key: "S2lNTp96u2Bhh6Pazrz9"
+                    },
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(response => {
+                    resultDiv.innerHTML = `
+                        <h2>Detection Results:</h2>
+                        <pre>${JSON.stringify(response.data, null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                });
+            }, 'image/jpeg');
+        });
+    </script>
+</body>
+</html>
