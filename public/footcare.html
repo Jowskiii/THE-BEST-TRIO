@@ -31,6 +31,10 @@
         --bs-bg-opacity: 1;
         background-color: #440107 !important;
         }
+        .navbar-nav .dropdown-menu {
+         background-color: #440107;
+        }
+
         header {
             background: linear-gradient(135deg, #440107, #8B0000);
             color: white;
@@ -96,7 +100,6 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="images/LOGO.png" alt="iSUKAT" width="100" height="100" class="d-inline-block align-top logo-img">
-                
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -120,14 +123,18 @@
                             Footcare
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="isukat.html">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-camera me-2" viewBox="0 0 16 16">
                                 <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
                                 <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
                             </svg>
                             iSUKAT MO
                         </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="isukat.html">Foot Type</a></li>
+                            <li><a class="dropdown-item" href="real.html">Foot Size Detection</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center" href="user-profile.html">
@@ -197,7 +204,121 @@
                 </div>
             </div>
         </section>
-
+        <section class="footcare-section">
+            <h2 class="section-title">Specific Foot Types: Characteristics, Care, and Shoe Recommendations</h2>
+        
+            <div class="mb-4">
+                <h3>1. Egyptian Foot Type</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="/api/placeholder/300/200" alt="Illustration of Egyptian Foot Type" class="img-fluid rounded mb-3">
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Characteristics:</h4>
+                        <p>The big toe is the longest, with other toes decreasing in length, often resulting in a longer, narrower foot shape.</p>
+                        <h4>Care Tips:</h4>
+                        <ul>
+                            <li>Pay extra attention to the big toe to avoid ingrown nails.</li>
+                            <li>Use toe separators to prevent overlapping of toes.</li>
+                            <li>Regularly moisturize to prevent dry skin, especially around the longer toes.</li>
+                        </ul>
+                        <h4>Shoe Recommendations:</h4>
+                        <ul>
+                            <li>Opt for shoes with a tapered toe box to accommodate the longer big toe.</li>
+                            <li>Consider slightly pointed shoes, as they often fit this foot type well.</li>
+                            <li>Ensure adequate toe room to prevent crowding of the longer toes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="mb-4">
+                <h3>2. Roman Foot Type</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="/api/placeholder/300/200" alt="Illustration of Roman Foot Type" class="img-fluid rounded mb-3">
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Characteristics:</h4>
+                        <p>The first three toes are of similar length, with the other two decreasing in size. This is considered the most common foot type.</p>
+                        <h4>Care Tips:</h4>
+                        <ul>
+                            <li>Focus on maintaining overall foot flexibility through stretching exercises.</li>
+                            <li>Pay attention to the ball of the foot, as pressure may be more evenly distributed.</li>
+                            <li>Regular pedicures can help maintain even toe lengths and prevent nail issues.</li>
+                        </ul>
+                        <h4>Shoe Recommendations:</h4>
+                        <ul>
+                            <li>Choose shoes with a square or rounded toe box for a comfortable fit.</li>
+                            <li>Look for shoes with good arch support to maintain foot structure.</li>
+                            <li>Athletic shoes often work well for this foot type due to their balanced design.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="mb-4">
+                <h3>3. Greek Foot Type (Morton's Toe)</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="/api/placeholder/300/200" alt="Illustration of Greek Foot Type" class="img-fluid rounded mb-3">
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Characteristics:</h4>
+                        <p>The second toe is longer than the big toe, which can increase the likelihood of bunions or hammer toes.</p>
+                        <h4>Care Tips:</h4>
+                        <ul>
+                            <li>Use protective pads on the second toe to prevent friction and pressure.</li>
+                            <li>Perform toe exercises to strengthen and maintain proper alignment.</li>
+                            <li>Be vigilant about signs of bunion development and address issues early.</li>
+                        </ul>
+                        <h4>Shoe Recommendations:</h4>
+                        <ul>
+                            <li>Look for shoes with a wider toe box to accommodate the longer second toe.</li>
+                            <li>Avoid narrow or pointed shoes that may crowd toes.</li>
+                            <li>Consider custom orthotics to redistribute pressure evenly across the foot.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="mb-4">
+                <h3>4. Germanic Foot Type</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="/api/placeholder/300/200" alt="Illustration of Germanic Foot Type" class="img-fluid rounded mb-3">
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Characteristics:</h4>
+                        <p>All toes are of similar length, creating a square-like appearance. Often associated with broader, sturdier feet.</p>
+                        <h4>Care Tips:</h4>
+                        <ul>
+                            <li>Focus on maintaining the skin between toes, as they may be closer together.</li>
+                            <li>Use a pumice stone regularly to prevent callus buildup on the square edge of the foot.</li>
+                            <li>Strengthen the foot muscles through exercises like toe curls and foot doming.</li>
+                        </ul>
+                        <h4>Shoe Recommendations:</h4>
+                        <ul>
+                            <li>Opt for shoes with a wide, square toe box for optimal comfort.</li>
+                            <li>Look for sturdy shoes with good support to complement the foot's natural strength.</li>
+                            <li>Athletic shoes or work boots often suit this foot type well.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div>
+                <h3>General Care Tips for All Foot Types</h3>
+                <ul>
+                    <li><strong>Daily Cleaning:</strong> Wash feet thoroughly and dry completely, especially between toes.</li>
+                    <li><strong>Regular Moisturizing:</strong> Keep skin soft and supple to prevent cracking and dryness.</li>
+                    <li><strong>Proper Nail Care:</strong> Trim nails straight across to prevent ingrown toenails.</li>
+                    <li><strong>Foot Exercises:</strong> Regularly perform stretches and exercises to maintain flexibility and strength.</li>
+                    <li><strong>Rotate Shoes:</strong> Alternate between different pairs to allow shoes to dry out completely.</li>
+                </ul>
+            </div>
+        </section>
+        
         <section class="footcare-section">
             <h2 class="section-title">Choosing the Right Shoes</h2>
             <div class="row">
@@ -213,7 +334,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-6">
-                    <img src="images/choosing-shoes.jpg" alt="Choosing the Right Shoes" class="img-fluid rounded">
+                    <img src="images/running.jpg" alt="Choosing the Right Shoes" class="img-fluid rounded">
                 </div>
             </div>
         </section>
@@ -223,12 +344,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-3">
+                        <img src="/api/placeholder/400/200" class="card-img-top" alt="Illustration of Athlete's Foot">
                         <div class="card-body">
                             <h3 class="card-title">Athlete's Foot</h3>
                             <p class="card-text">A fungal infection causing itching and burning. Keep feet dry and use antifungal treatments.</p>
                         </div>
                     </div>
                     <div class="card mb-3">
+                        <img src="/api/placeholder/400/200" class="card-img-top" alt="Illustration of Plantar Fasciitis">
                         <div class="card-body">
                             <h3 class="card-title">Plantar Fasciitis</h3>
                             <p class="card-text">Heel pain caused by inflammation. Stretch regularly and wear supportive shoes.</p>
@@ -237,12 +360,14 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card mb-3">
+                        <img src="/api/placeholder/400/200" class="card-img-top" alt="Illustration of Bunions">
                         <div class="card-body">
                             <h3 class="card-title">Bunions</h3>
                             <p class="card-text">Bony bumps at the base of the big toe. Wear wide shoes and use padding for comfort.</p>
                         </div>
                     </div>
                     <div class="card mb-3">
+                        <img src="/api/placeholder/400/200" class="card-img-top" alt="Illustration of Ingrown Toenails">
                         <div class="card-body">
                             <h3 class="card-title">Ingrown Toenails</h3>
                             <p class="card-text">Painful condition where the nail grows into the skin. Trim nails straight across and wear proper fitting shoes.</p>

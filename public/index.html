@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iSUKAT - Login & Signup</title>
+    <title>iSUKAT - Login & Register</title>
     <link rel="icon" type="image/x-icon" href="images/LOGO.ico">
     <!-- Bootstrap 4.5.2 CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -75,9 +75,12 @@
         .btn-primary {
             background-color: white;
             border-color: white;
-            color: #d11414;
+            color: #1b1e21;
         }
+        .password-toggle{
+            color: #ffa500 !important;
 
+        }
         .btn-secondary {
             background-color: transparent;
             border: 2px solid white;
@@ -154,14 +157,12 @@
             <div class="logo">
                 <img src="images/LOGO.png" alt="iSUKAT" class="logo-img">
             </div>
-            <h1>iSUKAT</h1>
-            <button class="btn btn-primary" id="showLogin">SIGN IN</button>
-            <button class="btn btn-secondary" id="showSignup">SIGN UP</button>
+            <button class="btn btn-primary" id="showLogin">Login</button>
+            <button class="btn btn-secondary" id="showSignup">Register</button>
         </div>
 
         <!-- Login Form -->
         <div id="loginForm">
-            <h1>Hello<br>Sign in!</h1>
             <form id="loginFormElement">
                 <div class="form-group">
                     <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
@@ -173,19 +174,21 @@
                 <div class="link-text text-right mb-3">
                     <a href="#" id="forgotPasswordLink">Forgot password?</a>
                 </div>
-                <button type="submit" class="btn btn-primary">SIGN IN</button>
+                <button type="submit" class="btn btn-primary">Login</button>
                 <div class="link-text">
-                    <span>Don't have an account? </span><a href="#" id="gotoSignup">Sign up</a>
+                    <span>Don't have an account? </span><a href="#" id="gotoSignup">Register</a>
                 </div>
             </form>
         </div>
 
         <!-- Signup Form -->
         <div id="signupForm">
-            <h1>Create Your<br>Account</h1>
             <form id="signupFormElement">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="signupName" placeholder="Full Name" required>
+                    <input type="text" class="form-control" id="signupfirstName" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="signuplastName" placeholder="Last Name" required>
                 </div>
                 <div class="form-group">
                     <input type="email" class="form-control" id="signupEmail" placeholder="Email" required>
@@ -198,9 +201,9 @@
                     <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required minlength="6" maxlength="16">
                     <i class="fas fa-eye password-toggle" data-target="confirmPassword"></i>
                 </div>
-                <button type="submit" class="btn btn-primary">SIGN UP</button>
+                <button type="submit" class="btn btn-primary">Register</button>
                 <div class="link-text">
-                    <span>Already have an account? </span><a href="#" id="gotoLogin">Sign In</a>
+                    <span>Already have an account? </span><a href="#" id="gotoLogin">Login</a>
                 </div>
             </form>
         </div>
@@ -287,7 +290,8 @@
     // Signup handler
     $('#signupFormElement').on('submit', function (e) {
     e.preventDefault();
-    const name = $('#signupName').val();
+    const firstName = $('#signupfirstName').val();
+    const lastName = $('#signuplastName').val();
     const email = $('#signupEmail').val();
     const password = $('#signupPassword').val();
     const confirmPassword = $('#confirmPassword').val();
@@ -302,11 +306,12 @@
             const user = userCredential.user;
             // Store user info in the database
             set(ref(database, 'users/' + user.uid), {
-                name: name,
-                email: email
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email
             });
             // Show success alert
-            showAlert('success', 'Signup successful! Please log in with your credentials.');
+            showAlert('success', 'Login successful! Please log in with your credentials.');
 
             // Navigate to the login form
             navigateTo('loginForm');
