@@ -28,11 +28,22 @@ app.get(['/','/homepage'], (req, res) => {
 });
 
 app.get('/shoes', (req, res) => {
-    sneaks.getProducts("Puma", 20, function(err, products) {
+    const { style, brand } = req.query;
+    let searchQuery = "Puma, Nike, Adidas, Jordan";
+    
+    if (brand) {
+        searchQuery = brand;
+    }
+    
+    sneaks.getProducts(searchQuery, 25, function(err, products) {
         if (err) {
             console.error('Error fetching products:', err);
             res.status(500).json({ error: 'Error fetching products' });
         } else {
+            // Apply style filter if provided
+            if (style) {
+                products = products.filter(product => product.style.toLowerCase().includes(style.toLowerCase()));
+            }
             res.json(products);
         }
     });

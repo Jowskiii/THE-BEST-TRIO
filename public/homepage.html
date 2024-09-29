@@ -69,6 +69,30 @@
             --bs-bg-opacity: 1;
             background-color: #440107 !important;
         }
+        .product-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    width: 220px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.product-item img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.product-item h3 {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.product-item p {
+    margin: 5px 0;
+}
     </style>
 </head>
 <body>
@@ -146,7 +170,7 @@
             <h4>Filter Shoes</h4>
             <div class="row">
                 <div class="col-md-3 mb-2">
-                    <select id="styleFilter" class="form-select">
+                    <select name="style">
                         <option value="">All Styles</option>
                         <option value="casual">Casual</option>
                         <option value="formal">Formal</option>
@@ -154,25 +178,20 @@
                     </select>
                 </div>
                 <div class="col-md-3 mb-2">
-                    <select id="brandFilter" class="form-select">
+                    <select name="brand">
                         <option value="">All Brands</option>
-                        <option value="nike">Nike</option>
-                        <option value="adidas">Adidas</option>
-                        <option value="puma">Puma</option>
+                        <option value="Nike">Nike</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Puma">Puma</option>
                     </select>
                 </div>
                 <div class="col-md-3 mb-2">
-                    <button class="btn btn-secondary" onclick="applyFilters()">Apply Filters</button>
+                    <button onclick="applyFilters()">Apply Filters</button>
                 </div>
             </div>
         </div>
-        <div id="product-grid" class="product-grid">
-
-        </div>
-
-        <div id="shoe-details">
-
-        </div>
+        <div id="product-grid" class="product-grid"></div>
+        <div id="shoe-details"></div>
     </div>
 
     <!-- Comparison Modal -->
@@ -183,9 +202,7 @@
                     <h5 class="modal-title" id="comparisonModalLabel">Shoe Comparison</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="comparisonResult">
-                    <!-- Comparison details will be populated here -->
-                </div>
+                <div class="modal-body" id="comparisonResult"></div>
             </div>
         </div>
     </div>
@@ -195,6 +212,7 @@
     <script>
         const API_BASE_URL = 'http://localhost:3028';
         const USD_TO_PHP_RATE = 56.50;
+
         document.addEventListener('DOMContentLoaded', function() {
             fetchShoes();
         });
@@ -203,101 +221,92 @@
             axios.get('/shoes')
                 .then(function (response) {
                     const shoes = response.data;
-                    displayShoes(shoes);
+                    updateProductGrid(shoes);
                 })
                 .catch(function (error) {
                     console.error('Error fetching shoes:', error);
                 });
         }
 
-        function displayShoes(shoes) {
+        function updateProductGrid(shoes) {
             const productGrid = document.getElementById('product-grid');
-            productGrid.innerHTML = '';
+            productGrid.innerHTML = ''; // Clear existing content
 
             shoes.forEach(shoe => {
-                const shoeCard = document.createElement('div');
-                shoeCard.className = 'product-card position-relative';
-                const priceInPHP = (shoe.retailPrice * USD_TO_PHP_RATE).toFixed(2);  // Convert USD to PHP
-                shoeCard.innerHTML = `
-                    <img src="${shoe.thumbnail}" alt="${shoe.shoeName}">
-                    <h3>${shoe.shoeName}</h3>
-                    <p>Brand: ${shoe.brand}</p>
-                    <p>Price: ₱${shoe.retailPrice * USD_TO_PHP_RATE}</p>
-                    <button class="btn btn-primary" onclick="showShoeDetails(${JSON.stringify(shoe).replace(/"/g, '&quot;')})">View Details</button>
-                    <input type="checkbox" class="compare-checkbox"
-                           data-shoe-name="${shoe.shoeName}"
-                           data-brand="${shoe.brand}"
-                           data-price="${shoe.retailPrice}"
-                           data-colorway="${shoe.colorway}"
-                           data-release-date="${shoe.releaseDate}"
-                           data-thumbnail="${shoe.thumbnail}">
-                    Compare
-                `;
-                productGrid.appendChild(shoeCard);
+                const productElement = createProductElement(shoe);
+                if (productElement) {
+                    productGrid.appendChild(productElement);
+                }
             });
         }
-        function populateProductGrid(shoes) {
-            const productGrid = document.getElementById('product-grid');
-            if (productGrid) {
-                productGrid.innerHTML = ''; // Clear existing content
-                shoes.forEach(shoe => {
-                    const shoeElement = document.createElement('div');
-                    shoeElement.className = 'product-item';
-                    shoeElement.innerHTML = `
-                        <img src="${shoe.thumbnail}" alt="${shoe.shoeName}">
-                        <h3>${shoe.name}</h3>
-                        <p>$${shoe.price}</p>
-                        <button onclick="showShoeDetails(${JSON.stringify(shoe)})">View Details</button>
-                    `;
-                    productGrid.appendChild(shoeElement);
-                });
-            } else {
-                console.error('Product grid element not found');
-            }
-        }
 
+        function createProductElement(shoe) {
+    if (!shoe) {
+        console.error('Invalid shoe data');
+        return null;
+    }
+
+    const productElement = document.createElement('div');
+    productElement.className = 'product-item';
+
+    const priceInPHP = (shoe.retailPrice * USD_TO_PHP_RATE).toFixed(2);
+
+    productElement.innerHTML = `
+        <img src="${shoe.thumbnail}" alt="${shoe.shoeName}" class="product-image">
+        <h3>${shoe.shoeName}</h3>
+        <p>Brand: ${shoe.brand}</p>
+        <p>Price: ₱${priceInPHP}</p>
+        <button class="btn btn-primary" onclick='showShoeDetails(${JSON.stringify(shoe)})'>View Details</button>
+        <input type="checkbox" class="compare-checkbox" 
+               data-shoe-name="${shoe.shoeName}"
+               data-brand="${shoe.brand}"
+               data-price="${shoe.retailPrice}"
+               data-colorway="${shoe.colorway}"
+               data-release-date="${shoe.releaseDate}"
+               data-thumbnail="${shoe.thumbnail}">
+        Compare
+    `;
+    return productElement;
+}
+
+
+
+        function applyFilters() {
+            const style = document.querySelector('select[name="style"]').value;
+            const brand = document.querySelector('select[name="brand"]').value;
+
+            fetch(`/shoes?style=${style}&brand=${brand}`)
+                .then(response => response.json())
+                .then(products => {
+                    updateProductGrid(products);
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
         function showShoeDetails(shoe) {
-            const shoeDetailsElement = document.getElementById('shoe-details');
-            if (shoeDetailsElement) {
-                shoeDetailsElement.innerHTML = `
-                    <div class="card">
-                        <img src="${shoe.thumbnail}" alt="${shoe.shoeName}">
-                        <div class="card-body">
-                            <h5 class="card-title">${shoe.name}</h5>
-                            <p class="card-text">${shoe.description}</p>
-                            <p class="card-text"><strong>Price:</strong> $${shoe.price}</p>
-                            <button class="btn btn-primary" onclick="addToCompare(${shoe.id})">Add to Compare</button>
-                        </div>
+            const modalContent = document.getElementById('shoeDetailsContent');
+            const priceInPHP = (shoe.retailPrice * USD_TO_PHP_RATE).toFixed(2);
+
+            modalContent.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="${shoe.thumbnail}" alt="${shoe.shoeName}" class="img-fluid">
                     </div>
-                `;
-            } else {
-                console.error('Shoe details element not found');
-            }
+                    <div class="col-md-6">
+                        <h2>${shoe.shoeName}</h2>
+                        <p><strong>Brand:</strong> ${shoe.brand}</p>
+                        <p><strong>Price:</strong> ₱${priceInPHP}</p>
+                        <p><strong>Colorway:</strong> ${shoe.colorway}</p>
+                        <p><strong>Release Date:</strong> ${shoe.releaseDate}</p>
+                    </div>
+                </div>
+            `;
+
+            const shoeDetailsModal = new bootstrap.Modal(document.getElementById('shoeDetailsModal'));
+            shoeDetailsModal.show();
         }
 
-
-
-        function generateSizeTable(sizes) {
-            let html = '';
-            const sizeRows = Math.ceil(Object.keys(sizes).length / 4);
-            for (let i = 0; i < sizeRows; i++) {
-                html += '<tr>';
-                for (let j = 0; j < 4; j++) {
-                    const index = i * 4 + j;
-                    const size = Object.keys(sizes)[index];
-                    if (size) {
-                        html += `<td>${size}<br>$${sizes[size]}</td>`;
-                    } else {
-                        html += '<td></td>';
-                    }
-                }
-                html += '</tr>';
-            }
-            return html;
-        }
-
-        // Handle shoe comparison
+        // Comparison logic
         document.getElementById('compareBtn').addEventListener('click', function() {
             const checkboxes = document.querySelectorAll('.compare-checkbox:checked');
             const selectedShoes = [];
@@ -347,63 +356,22 @@
             const comparisonModal = new bootstrap.Modal(document.getElementById('comparisonModal'));
             comparisonModal.show();
         }
-        function createShoeElement(shoe) {
-            const shoeElement = document.createElement('div');
-            shoeElement.className = 'product-item';
-            shoeElement.innerHTML = `
-                <img src="${shoe.image}" alt="${shoe.name}" style="max-width: 100%;">
-                <h3>${shoe.name}</h3>
-                <p>Price: $${shoe.price}</p>
-                <p>Style: ${shoe.style}</p>
-                <p>Brand: ${shoe.brand}</p>
-                <button onclick="showShoeDetails(${shoe.id})">View Details</button>
-            `;
-            return shoeElement;
-        }
-
-        function populateProductGrid(shoesToDisplay) {
-            const productGrid = document.getElementById('product-grid');
-            productGrid.innerHTML = '';
-            shoesToDisplay.forEach(shoe => {
-                const shoeElement = createShoeElement(shoe);
-                productGrid.appendChild(shoeElement);
-            });
-        }
-
-        function applyFilters() {
-            const styleFilter = document.getElementById('styleFilter').value;
-            const brandFilter = document.getElementById('brandFilter').value;
-
-            const filteredShoes = shoes.filter(shoe => 
-                (styleFilter === '' || shoe.style === styleFilter) &&
-                (brandFilter === '' || shoe.brand === brandFilter)
-            );
-
-            populateProductGrid(filteredShoes);
-        }
-
-        function showShoeDetails(shoeId) {
-            const shoe = shoes.find(s => s.id === shoeId);
-            if (shoe) {
-                const detailsElement = document.getElementById('shoe-details');
-                detailsElement.innerHTML = `
-                    <h2>${shoe.name}</h2>
-                    <img src="${shoe.image}" alt="${shoe.name}" style="max-width: 300px;">
-                    <p>Price: $${shoe.price}</p>
-                    <p>Style: ${shoe.style}</p>
-                    <p>Brand: ${shoe.brand}</p>
-                    <!-- Add more details as needed -->
-                `;
-            }
-        }
-
-        function compareShoes() {
-            // Implement comparison logic here
-            console.log("Compare shoes functionality to be implemented");
-        }
-
-        // Initially populate the product grid with all shoes
-        populateProductGrid(shoes);
     </script>
+
+    <!-- Shoe Details Modal -->
+    <div class="modal fade" id="shoeDetailsModal" tabindex="-1" aria-labelledby="shoeDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shoeDetailsModalLabel">Shoe Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="shoeDetailsContent"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
