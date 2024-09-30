@@ -256,7 +256,7 @@
         <h3>${shoe.shoeName}</h3>
         <p>Brand: ${shoe.brand}</p>
         <p>Price: ₱${priceInPHP}</p>
-        <button class="btn btn-primary" onclick='showShoeDetails(${JSON.stringify(shoe)})'>View Details</button>
+        <button class="view-details-btn" data-shoe-id="${shoe.id}">View Details</button>
         <input type="checkbox" class="compare-checkbox" 
                data-shoe-name="${shoe.shoeName}"
                data-brand="${shoe.brand}"
@@ -266,9 +266,37 @@
                data-thumbnail="${shoe.thumbnail}">
         Compare
     `;
+    const viewDetailsBtn = productElement.querySelector('.view-details-btn');
+    viewDetailsBtn.addEventListener('click', () => viewDetails(shoe));
     return productElement;
 }
 
+function viewDetails(shoe) {
+    // Fetch the product details using the productId
+    // and display them in the modal
+    const modal = document.getElementById('shoeDetailsModal');
+    const modalContent = document.getElementById('shoeDetailsContent');
+    const priceInPHP = (shoe.retailPrice * USD_TO_PHP_RATE).toFixed(2);
+    // For demonstration, we'll just show the product ID
+    modalContent.innerHTML = `
+    <div class="row">
+            <div class="col-md-6">
+                <img src="${shoe.thumbnail}" alt="${shoe.shoeName}" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h2>${shoe.shoeName}</h2>
+                <p><strong>Brand:</strong> ${shoe.brand}</p>
+                <p><strong>Price:</strong> ₱${priceInPHP}</p>
+                <p><strong>Colorway:</strong> ${shoe.colorway}</p>
+                <p><strong>Release Date:</strong> ${shoe.releaseDate}</p>
+                <p><strong>Description:</strong> ${shoe.description || 'No description available.'}</p>
+            </div>
+        </div>
+    `;
+    
+    // Show the modal
+    new bootstrap.Modal(modal).show();
+  }
 
 
         function applyFilters() {
