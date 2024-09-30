@@ -26,6 +26,5 @@ jobs:
         run: npm install
         working-directory: the-best-trio  # Specify the working directory
 
-      - name: Run index.js
-        run: node index.js
+      - name: Run index.js &
         working-directory: the-best-trio  # Specify the working directory
