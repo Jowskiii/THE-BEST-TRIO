@@ -182,77 +182,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const form = document.getElementById('uploadForm');
-        const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
-        const resultDiv = document.getElementById('result');
-        const deleteImageBtn = document.getElementById('deleteImageBtn');
-
-        imageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
-                    imagePreview.classList.remove('hidden');
-                    deleteImageBtn.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        deleteImageBtn.addEventListener('click', () => {
-            imageInput.value = '';
-            imagePreview.src = '';
-            imagePreview.classList.add('hidden');
-            deleteImageBtn.classList.add('hidden');
-            resultDiv.innerHTML = ''; // Clear any previous results
-        });
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const file = imageInput.files[0];
-            if (!file) {
-                alert('Please select an image file');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            resultDiv.innerHTML = 'Analyzing...';
-
-            try {
-                const response = await axios.post(
-                    'https://detect.roboflow.com/isukat/1',
-                    formData,
-                    {
-                        params: {
-                            api_key: 'S2lNTp96u2Bhh6Pazrz9'
-                        },
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                );
-
-                const predictions = response.data.predictions;
-                if (predictions && predictions.length > 0) {
-                    const topPrediction = predictions[0];
-                    resultDiv.innerHTML = `<h2>Classification Result:</h2>
-                                           <p>Class: ${topPrediction.class}</p>
-                                           <p>Confidence: ${(topPrediction.confidence * 100).toFixed(2)}%</p>`;
-                } else {
-                    resultDiv.innerHTML = '<p>No classification result found.</p>';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                resultDiv.innerHTML = `<h2>Error:</h2><p>${error.message}</p>`;
+                // Here you would typically send the file to your server for processing
+                // For this example, we'll just display a message
+                document.getElementById('result').innerHTML = `<p>Image "${file.name}" uploaded successfully. Processing...</p>`;
+                // You can add your image processing logic here
+            } else {
+                document.getElementById('result').innerHTML = '<p>Please select an image to upload.</p>';
             }
         });
     </script>
-
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
