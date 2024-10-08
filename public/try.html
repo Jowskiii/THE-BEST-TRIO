@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iSukat - Image Upload and Classification</title>
+    <title>iSukat - Shoe Brand Classification</title>
     <link rel="icon" type="image/x-icon" href="images/LOGO.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
@@ -11,7 +11,7 @@
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'arial', sans-serif;
+            font-family: 'Arial', sans-serif;
             box-sizing: border-box;
         }
 
@@ -32,7 +32,7 @@
             flex: 1;
             padding: 20px;
             background: #f9f9f9;
-            margin-top: 56px; /* Adjust based on navbar height */
+            margin-top: 56px;
         }
 
         .logo-img {
@@ -43,8 +43,8 @@
         }
 
         .navbar-nav .nav-link {
-            font-size: 16px; /* Adjust font size */
-            padding: 10px;   /* Adjust spacing */
+            font-size: 16px;
+            padding: 10px;
         }
 
         .bg-dark {
@@ -62,7 +62,7 @@
 
         #imagePreview {
             max-width: 100%;
-            height: auto; /* Maintain aspect ratio */
+            height: auto;
             margin-top: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -92,23 +92,23 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-danger:hover {
             background-color: #5a0c15;
         }
+
         .navbar-nav .dropdown-menu {
-         background-color: #440107;
+            background-color: #440107;
         }
-        /* Media query for larger screens (laptops and desktops) */
+
         @media (min-width: 768px) {
             #imagePreview {
-                max-width: 50%; /* Adjust this value to reduce the size */
-                margin: 20px auto; /* Center the image horizontally */
+                max-width: 50%;
+                margin: 20px auto;
             }
         }
     </style>
 </head>
 <body>
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
@@ -121,7 +121,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link align-items-center" aria-current="page" href="homepage.html">
+                        <a class="nav-link d-flex align-items-center" aria-current="page" href="homepage.html">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house me-2" viewBox="0 0 16 16">
                                 <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
                             </svg>
@@ -152,7 +152,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="user-profile.html">
+                        <a class="nav-link align-items-center" href="user-profile.html">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle me-2" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -191,6 +191,37 @@
 
     <!-- Script for image upload, delete, and classification -->
     <script>
+        const shoeBrandDetails = {
+            "Nike": {
+                description: "Known for its cutting-edge athletic footwear, Nike is a leader in sports innovation. Discover more about Nike and browse a wide selection of related shoes by visiting the link below.",
+                website: "https://www.nike.com/ph/"
+            },
+            "Adidas": {
+                description: "Adidas is famous for blending performance with streetwear style in its versatile shoe collections. Learn more about Adidas and check out a variety of shoes through the link provided.",
+                website: "https://www.adidas.com.ph/"
+            },
+            "Puma": {
+                description: "Puma is recognized for its bold designs that cater to athletes and fashion-forward individuals alike. Visit the link to explore Puma and view a range of shoes connected to the brand.",
+                website: "https://ph.puma.com/ph/en/home"
+            },
+            "New Balance": {
+                description: "Known for its comfort and support, New Balance shoes are a top choice for runners and casual wearers. Find out more about New Balance and explore different types of shoes by following the link.",
+                website: "https://www.newbalance.com/"
+            },
+            "Jordan": {
+                description: "The Jordan line offers iconic basketball-inspired footwear that blends style with high performance. Follow the link to explore the Jordan brand and see a variety of their shoes.",
+                website: "https://www.nike.com/jordan"
+            },
+            "Reebok": {
+                description: "Reebok is celebrated for its fitness-focused shoes, perfect for training and everyday comfort. To explore more about this brand and view various types of related shoes, visit the following link.",
+                website: "https://reebok.ph/"
+            },
+            "Under Armour": {
+                description: "Under Armour specializes in high-performance footwear designed to boost athletic performance. For more information on Under Armour and to browse their collection of shoes, click the link below.",
+                website: "https://www.underarmour.com.ph/en-ph/"
+            }
+        };
+
         const form = document.getElementById('uploadForm');
         const imageInput = document.getElementById('imageInput');
         const imagePreview = document.getElementById('imagePreview');
@@ -215,7 +246,7 @@
             imagePreview.src = '';
             imagePreview.classList.add('hidden');
             deleteImageBtn.classList.add('hidden');
-            resultDiv.innerHTML = ''; // Clear any previous results
+            resultDiv.innerHTML = '';
         });
 
         form.addEventListener('submit', async (e) => {
@@ -229,7 +260,7 @@
             const formData = new FormData();
             formData.append('file', file);
 
-            resultDiv.innerHTML = 'Analyzing...';
+            resultDiv.innerHTML = '<p class="text-center">Analyzing...</p>';
 
             try {
                 const response = await axios.post(
@@ -248,15 +279,40 @@
                 const predictions = response.data.predictions;
                 if (predictions && predictions.length > 0) {
                     const topPrediction = predictions[0];
-                    resultDiv.innerHTML = `<h2>Classification Result:</h2>
-                                           <p>Class: ${topPrediction.class}</p>
-                                           <p>Confidence: ${(topPrediction.confidence * 100).toFixed(2)}%</p>`;
+                    const brandName = topPrediction.class;
+                    const brandDetails = shoeBrandDetails[brandName];
+
+                    let resultHTML = `<h2 class="text-center mb-4">Classification Result</h2>
+                                      <div class="alert alert-success">
+                                        <h3 class="mb-3">Brand: ${brandName}</h3>
+                                      </div>`;
+
+                    if (brandDetails) {
+                        resultHTML += `<div class="card mt-4">
+                                         <div class="card-header">
+                                           <h3 class="mb-0">Brand Details</h3>
+                                         </div>
+                                         <div class="card-body">
+                                           <p>${brandDetails.description}</p>
+                                           <p><strong>Website:</strong> <a href="${brandDetails.website}" target="_blank">${brandDetails.website}</a></p>
+                                         </div>
+                                       </div>`;
+                    } else {
+                        resultHTML += `<div class="alert alert-info mt-4">
+                                         <p class="mb-0">No additional details available for this brand.</p>
+                                       </div>`;
+                    }
+
+                    resultDiv.innerHTML = resultHTML;
                 } else {
-                    resultDiv.innerHTML = '<p>No classification result found.</p>';
+                    resultDiv.innerHTML = '<div class="alert alert-warning"><p class="mb-0">No classification result found.</p></div>';
                 }
             } catch (error) {
                 console.error('Error:', error);
-                resultDiv.innerHTML = `<h2>Error:</h2><p>${error.message}</p>`;
+                resultDiv.innerHTML = `<div class="alert alert-danger">
+                                         <h2 class="h4 mb-3">Error</h2>
+                                         <p class="mb-0">${error.message}</p>
+                                       </div>`;
             }
         });
     </script>

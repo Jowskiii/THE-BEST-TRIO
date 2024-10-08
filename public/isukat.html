@@ -191,6 +191,25 @@
 
     <!-- Script for image upload, delete, and classification -->
     <script>
+        const footTypeDetails = {
+            "Roman":{
+                description:"The Roman foot has the first three toes of equal length, creating a more square-shaped toe line.",
+                website:"https://kcfoot.com/there-are-9-types-of-feet-which-type-are-you/"
+            },
+            "Egyptian":{
+                description:"The Egyptian foot features a long big toe, with the other toes descending in length, creating a sloped appearance.",
+                website:"https://kcfoot.com/there-are-9-types-of-feet-which-type-are-you/"
+            },
+            "Germanic":{
+                description:"The Germanic foot is broad, with a shorter big toe and a wider overall shape, often needing more room in the shoe's toe box.",
+                website:"https://kcfoot.com/there-are-9-types-of-feet-which-type-are-you/"
+            },
+            "Greek":{
+                description:"The Greek foot is defined by a second toe that is longer than the big toe, which can impact shoe fit and pressure points.",
+                website:"https://kcfoot.com/there-are-9-types-of-feet-which-type-are-you/"
+            }
+        }
+
         const form = document.getElementById('uploadForm');
         const imageInput = document.getElementById('imageInput');
         const imagePreview = document.getElementById('imagePreview');
@@ -245,18 +264,43 @@
                     }
                 );
 
-                const predictions = response.data.predictions;
+        const predictions = response.data.predictions;
                 if (predictions && predictions.length > 0) {
                     const topPrediction = predictions[0];
-                    resultDiv.innerHTML = `<h2>Classification Result:</h2>
-                                           <p>Class: ${topPrediction.class}</p>
-                                           <p>Confidence: ${(topPrediction.confidence * 100).toFixed(2)}%</p>`;
+                    const footType = topPrediction.class;
+                    const footDetails = footTypeDetails[footType];
+
+                    let resultHTML = `<h2 class="text-center mb-4">Classification Result</h2>
+                                      <div class="alert alert-success">
+                                        <h3 class="mb-3">Foot Type: ${footType}</h3>
+                                      </div>`;
+
+                    if (footDetails) {
+                        resultHTML += `<div class="card mt-4">
+                                         <div class="card-header">
+                                           <h3 class="mb-0">Foot Type Details:</h3>
+                                         </div>
+                                         <div class="card-body">
+                                           <p>${footDetails.description}</p>
+                                            <p><strong>For more info visit:</strong> <a href="${footDetails.website}" target="_blank">${footDetails.website}</a></p>
+                                         </div>
+                                       </div>`;
+                    } else {
+                        resultHTML += `<div class="alert alert-info mt-4">
+                                         <p class="mb-0">No additional details available for this brand.</p>
+                                       </div>`;
+                    }
+
+                    resultDiv.innerHTML = resultHTML;
                 } else {
-                    resultDiv.innerHTML = '<p>No classification result found.</p>';
+                    resultDiv.innerHTML = '<div class="alert alert-warning"><p class="mb-0">No classification result found.</p></div>';
                 }
             } catch (error) {
                 console.error('Error:', error);
-                resultDiv.innerHTML = `<h2>Error:</h2><p>${error.message}</p>`;
+                resultDiv.innerHTML = `<div class="alert alert-danger">
+                                         <h2 class="h4 mb-3">Error</h2>
+                                         <p class="mb-0">${error.message}</p>
+                                       </div>`;
             }
         });
     </script>

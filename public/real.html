@@ -60,7 +60,7 @@
             padding: 30px;
         }
 
-        #video, #canvas {
+        #imagePreview {
             max-width: 100%;
             height: auto;
             margin-top: 20px;
@@ -76,7 +76,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-primary {
+        .btn-primary, .btn-danger {
             background-color: #440107;
             border: none;
             padding: 10px 20px;
@@ -84,18 +84,22 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-danger:hover {
             background-color: #5a0c15;
         }
 
+        .navbar-nav .dropdown-menu {
+            background-color: #440107;
+        }
+        .hidden {
+            display: none;
+        }
+
         @media (min-width: 768px) {
-            #video, #canvas {
+            #imagePreview {
                 max-width: 50%;
                 margin: 20px auto;
             }
-        }
-        .navbar-nav .dropdown-menu {
-         background-color: #440107;
         }
     </style>
 </head>
@@ -206,7 +210,7 @@
             imagePreview.src = '';
             imagePreview.classList.add('hidden');
             deleteImageBtn.classList.add('hidden');
-            resultDiv.innerHTML = ''; // Clear any previous results
+            resultDiv.innerHTML = '';
         });
 
         form.addEventListener('submit', async (e) => {
@@ -220,7 +224,7 @@
             const formData = new FormData();
             formData.append('file', file);
 
-            resultDiv.innerHTML = 'Analyzing...';
+            resultDiv.innerHTML = '<p class="text-center">Analyzing...</p>';
 
             try {
                 const response = await axios.post(
