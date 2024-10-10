@@ -94,6 +94,67 @@
         .hidden {
             display: none;
         }
+                .store-section {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .store-section-header {
+            background-color: #440107;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .store-section-body {
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .store-link {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #440107;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 2px solid #440107;
+            font-weight: bold;
+        }
+
+        .store-link:hover {
+            background-color: #440107;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .classification-result {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .foot-size-result {
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 1.2em;
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
         @media (min-width: 768px) {
             #imagePreview {
@@ -186,6 +247,51 @@
 
     <!-- Script for image upload, delete, and classification -->
     <script>
+         const footSizeDetails = {
+            "Size-4": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz5e1x6zb2h62znik1zy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=3_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=5" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=5&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            },
+            "Size-5": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz5e1x6zb2h62znik1zy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=3_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=5" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=5&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            },
+            "Size-6": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz4i7w1z5e1x6znik1zy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=4_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=6" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=6&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            },
+            "Size-7": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz5e1x6znik1zvyaizy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=5_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=7" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=7&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            },
+            "Size-8": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz5e1x6znik1zom6bzy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=6_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=8" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=8&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            },
+            "Size-9": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz5e1x6z7p17aznik1zy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=7_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=9" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=9&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            },
+            "Size-10": {
+                website: '<a href="https://www.nike.com/ph/w/shoes-3rauvz5e1x6z7xrj1znik1zy7ok" target="_blank" class="store-link">Nike</a>',
+                website2: '<a href="https://www.adidas.com.ph/men%7Cwomen-shoes?sort=top-sellers&v_size_en_ph=8_uk" target="_blank" class="store-link">Adidas</a>',
+                website3: '<a href="https://www.underarmour.com.ph/en-ph/c/shoes/men+women/?prefn1=size&prefv1=10" target="_blank" class="store-link">Under Armour</a>',
+                website4: '<a href="https://ph.puma.com/ph/en/puma-10.10-ph?prefv2=10&prefn2=size&prefv1=Unisex&prefn1=gender" target="_blank" class="store-link">Puma</a>'
+            }
+        };
+
         const form = document.getElementById('uploadForm');
         const imageInput = document.getElementById('imageInput');
         const imagePreview = document.getElementById('imagePreview');
@@ -240,18 +346,45 @@
                     }
                 );
 
-                const predictions = response.data.predictions;
+               const predictions = response.data.predictions;
                 if (predictions && predictions.length > 0) {
                     const topPrediction = predictions[0];
-                    resultDiv.innerHTML = `<h2>Classification Result:</h2>
-                                           <p>Class: ${topPrediction.class}</p>
-                                           <p>Confidence: ${(topPrediction.confidence * 100).toFixed(2)}%</p>`;
+                    const footSize = topPrediction.class;
+                    const sizeDetails = footSizeDetails[footSize];
+
+                    let resultHTML = `  <h2 class="classification-result">Classification Result</h2>
+                                        <div class="foot-size-result">
+                                            Your Foot Size: ${footSize}
+                                        </div>`;
+
+                    if (sizeDetails) {
+                        resultHTML += `<div class="store-section">
+                                        <div class="store-section-header">
+                                            Explore Shoes in Your Size on These Stores:
+                                        </div>
+                                        <div class="store-section-body">
+                ${sizeDetails.website}
+                ${sizeDetails.website2}
+                ${sizeDetails.website3}
+                ${sizeDetails.website4}
+                                         </div>
+                                       </div>`;
+                    } else {
+                        resultHTML += `<div class="alert alert-info mt-4">
+                                         <p class="mb-0">No additional details available for this brand.</p>
+                                       </div>`;
+                    }
+
+                    resultDiv.innerHTML = resultHTML;
                 } else {
-                    resultDiv.innerHTML = '<p>No classification result found.</p>';
+                    resultDiv.innerHTML = '<div class="alert alert-warning"><p class="mb-0">No classification result found.</p></div>';
                 }
             } catch (error) {
                 console.error('Error:', error);
-                resultDiv.innerHTML = `<h2>Error:</h2><p>${error.message}</p>`;
+                resultDiv.innerHTML = `<div class="alert alert-danger">
+                                         <h2 class="h4 mb-3">Error</h2>
+                                         <p class="mb-0">${error.message}</p>
+                                       </div>`;
             }
         });
     </script>
